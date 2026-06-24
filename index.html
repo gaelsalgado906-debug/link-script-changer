@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gael CC del victory</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;800&family=Chewy&display=swap');
+
+        :root {
+            --dark-cyan: #008b8b;
+            --smooth-ease: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #000000;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .font-chewy {
+            font-family: 'Chewy', system-ui, sans-serif;
+        }
+
+        .ui-scale-wrapper {
+            transform: scale(0.9);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            perspective: 1200px;
+        }
+
+        /* --- FONDO ANIMADO MODERNO --- */
+        .bg-glow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 50%, #0a1112 0%, #000000 100%);
+            z-index: -1;
+        }
+
+        .ambient-light {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 139, 139, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: moveLight 20s infinite alternate var(--smooth-ease);
+            z-index: -1;
+        }
+
+        @keyframes moveLight {
+            0% { transform: translate(-20%, -20%); }
+            100% { transform: translate(20%, 20%); }
+        }
+
+        /* --- ANIMACIÓN DE ENTRADA SUAVE --- */
+        @keyframes cameraEntry {
+            0% {
+                opacity: 0;
+                transform: translateZ(-150px) scale(0.85);
+                filter: blur(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateZ(0) scale(1);
+                filter: blur(0px);
+            }
+        }
+
+        .camera-layer {
+            animation: cameraEntry 3s var(--smooth-ease) forwards;
+        }
+
+        /* --- ANIMACIONES DE TEXTO MODERNAS --- */
+        @keyframes modernPulse {
+            0%, 100% { transform: scale(1); opacity: 0.9; filter: drop-shadow(0 0 10px rgba(0, 139, 139, 0.4)); }
+            50% { transform: scale(1.03); opacity: 1; filter: drop-shadow(0 0 25px rgba(0, 230, 230, 0.6)); }
+        }
+        .animate-modern-loading {
+            animation: modernPulse 2.5s infinite ease-in-out;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animate-gradient-text {
+            background-size: 200% auto;
+            animation: gradientMove 4s linear infinite;
+        }
+
+        @keyframes softPop {
+            0% { transform: scale(0.92); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-soft-pop {
+            animation: softPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow">
+        <div class="ambient-light"></div>
+    </div>
+
+    <div class="ui-scale-wrapper">
+        <div class="camera-layer w-full max-w-4xl text-center px-4">
+            
+            <div id="loading-screen" class="w-full max-w-md mx-auto space-y-6 transition-all duration-700 opacity-100 transform scale-100">
+                <h1 id="loading-title" class="font-chewy text-5xl md:text-7xl tracking-wider min-h-[70px] text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-400 to-emerald-400 animate-modern-loading">
+                    GAEL CC
+                </h1>
+
+                <div class="relative w-full h-4 bg-zinc-900 rounded-full p-[3px] shadow-inner border border-zinc-800">
+                    <div id="progress-bar" 
+                         class="h-full w-0 rounded-full bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 shadow-[0_0_15px_rgba(0,139,139,0.5)] transition-all duration-100 ease-out">
+                    </div>
+                </div>
+
+                <p id="progress-text" class="text-sm font-medium text-zinc-400 tracking-widest font-mono">
+                    0%
+                </p>
+            </div>
+
+            <div id="continue-screen" class="hidden w-full max-w-md mx-auto space-y-8 transition-all duration-700 opacity-0 transform scale-95">
+                <h2 class="font-chewy text-6xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-cyan-300 to-emerald-400 tracking-wide drop-shadow-lg animate-gradient-text">
+                    Continuar
+                </h2>
+                <div class="pt-4">
+                    <button id="go-btn" class="font-chewy text-4xl px-16 py-3 bg-gradient-to-r from-cyan-500 via-teal-500 to-emerald-500 rounded-2xl shadow-[0_0_25px_rgba(0,139,139,0.4)] hover:shadow-[0_0_40px_rgba(0,230,230,0.6)] hover:scale-105 active:scale-95 transition-all duration-300 tracking-widest text-white uppercase">
+                        GO
+                    </button>
+                </div>
+            </div>
+
+            <div id="key-screen" class="hidden w-full max-w-lg mx-auto space-y-6 transition-all duration-700 opacity-0 transform scale-95">
+                <div class="space-y-4">
+                    <p id="key-title" class="font-chewy text-4xl md:text-5xl text-cyan-300 tracking-wide">
+                        Script Loaded :
+                    </p>
+                    
+                    <div class="bg-zinc-950/90 border border-zinc-800 rounded-2xl p-5 font-mono text-sm md:text-base text-emerald-400 tracking-normal break-all text-left select-all shadow-inner">
+                       https://gaelsalgado906-debug.github.io/script-changer-/  
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        const loadingScreen = document.getElementById('loading-screen');
+        const continueScreen = document.getElementById('continue-screen');
+        const keyScreen = document.getElementById('key-screen');
+        
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        const goBtn = document.getElementById('go-btn');
+        const keyTitle = document.getElementById('key-title');
+
+        // Configuración exacta a 9 segundos (9000ms)
+        let progress = 0;
+        const totalTime = 9000; 
+        const intervalTime = 90; 
+        const increment = 100 / (totalTime / intervalTime); 
+
+        // Retardo inicial sincronizado con la animación de la interfaz
+        setTimeout(() => {
+            const progressInterval = setInterval(() => {
+                progress += increment;
+                
+                if (progress >= 100) {
+                    progress = 100;
+                    clearInterval(progressInterval);
+                    
+                    progressBar.style.width = '100%';
+                    progressText.innerText = '100%';
+                    
+                    switchScreens(loadingScreen, continueScreen);
+                } else {
+                    progressBar.style.width = `${Math.floor(progress)}%`;
+                    progressText.innerText = `${Math.floor(progress)}%`;
+                }
+            }, intervalTime);
+        }, 500);
+
+        // Evento al hacer click en el botón GO
+        goBtn.addEventListener('click', () => {
+            switchScreens(continueScreen, keyScreen);
+            keyTitle.classList.add('animate-soft-pop');
+        });
+
+        // Transición global de pantallas
+        function switchScreens(currentScreen, nextScreen) {
+            currentScreen.classList.remove('opacity-100', 'scale-100');
+            currentScreen.classList.add('opacity-0', 'scale-95');
+
+            setTimeout(() => {
+                currentScreen.classList.add('hidden');
+                nextScreen.classList.remove('hidden');
+                
+                setTimeout(() => {
+                    nextScreen.classList.remove('opacity-0', 'scale-95');
+                    nextScreen.classList.add('opacity-100', 'scale-100');
+                }, 50);
+            }, 700); 
+        }
+    </script>
+</body>
+</html>
